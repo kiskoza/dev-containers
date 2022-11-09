@@ -1,0 +1,20 @@
+{
+  "name": "dev-containers",
+  "version": "0.1.0",
+  "description": "Create a new container for every user in development",
+  "author": "Koza <kiskoza@gmail.com>",
+  "scripts": {
+    "build": "web-ext build -s src --overwrite-dest",
+    "dev": "web-ext run -s src",
+    "lint": "web-ext lint -s src",
+    "sign": "web-ext sign -s src"
+  },
+  "devDependencies": {
+    "web-ext": "^7.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kiskoza/login-containers.git"
+  },
+  "license": "MIT"
+}

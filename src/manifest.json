@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "Dev Containers",
+  "version": "0.1",
+
+  "description": "Create a new container for every user in development",
+
+  "icons": {
+    "48": "icons/fingerprint-48.png"
+  },
+
+  "permissions": [
+      "contextualIdentities",
+      "cookies",
+      "tabs"
+  ],
+
+  "background": {
+      "scripts": ["background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://127.0.0.1/*"],
+      "js": ["containers.js"]
+    }
+  ]
+
+}

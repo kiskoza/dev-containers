@@ -1,6 +1,6 @@
 {
   "name": "dev-containers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create a new container for every user in development",
   "author": "Koza <kiskoza@gmail.com>",
   "scripts": {

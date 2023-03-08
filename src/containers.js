@@ -29,7 +29,7 @@
         password: password
       });
 
-      e.preventDefault();
+      event.preventDefault();
     })
   }
 })();

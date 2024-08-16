@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:kiskoza/login-containers.git"
+    "url": "git@github.com:kiskoza/dev-containers.git"
   },
   "license": "MIT"
 }

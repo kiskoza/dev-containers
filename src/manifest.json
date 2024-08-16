@@ -12,6 +12,7 @@
   "permissions": [
       "contextualIdentities",
       "cookies",
+      "storage",
       "tabs"
   ],
 
@@ -21,9 +22,13 @@
 
   "content_scripts": [
     {
-      "matches": ["*://127.0.0.1/*"],
+      "matches": ["*://127.0.0.1/*", "*://localhost/*", "*://*.localhost/*"],
       "js": ["containers.js"]
     }
-  ]
+  ],
+
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
 
 }

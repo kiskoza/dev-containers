@@ -12,6 +12,16 @@ async function setupContainer (request) {
     context = contexts[0];
   } else {
     context = await browser.contextualIdentities.create({name: name, ...CONTAINER_DETAILS});
+
+    browser.storage.local.get('accounts').then((results) => {
+      let { accounts } = results;
+      accounts ||= [];
+
+      if ( !accounts.includes(request.email) ) {
+        accounts.push(request.email)
+        browser.storage.local.set({accounts});
+      }
+    })
   }
 
   const [activeTab] = await browser.tabs.query({active: true, lastFocusedWindow: true});

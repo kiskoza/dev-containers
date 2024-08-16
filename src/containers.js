@@ -1,9 +1,9 @@
-SIGN_IN_PATHS = ['/sign_in', '/users/sign_in'];
-FORM = SIGN_IN_PATHS.map(el => `form[action="${el}"]`).join(', ');
-USERNAME_FIELD = ['text', 'email'].map(el => `input[type=${el}]`).join(', ');
-PASSWORD_FIELD = ['password'].map(el => `input[type=${el}]`).join(', ');
-
 (async function init () {
+  SIGN_IN_PATHS = (await browser.storage.local.get('sign_in_paths')).sign_in_paths || ['/sign_in', '/users/sign_in'];
+  FORM = SIGN_IN_PATHS.map(el => `form[action="${el}"]`).join(', ');
+  USERNAME_FIELD = ['text', 'email'].map(el => `input[type=${el}]`).join(', ');
+  PASSWORD_FIELD = ['password'].map(el => `input[type=${el}]`).join(', ');
+
   browser.runtime.onMessage.addListener(message => {
     switch (message.action) {
     case 'ping':

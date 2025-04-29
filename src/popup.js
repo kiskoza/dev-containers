@@ -15,10 +15,10 @@
     let textNode = document.createTextNode(account);
     let liNode = document.createElement('li');
     liNode.appendChild(textNode);
-    document.getElementById('login_list').appendChild(liNode);
+    document.getElementById('path_list').appendChild(liNode);
   });
 
-  document.getElementById('new-path-form').addEventListener('submit', async (event) => {
+  document.getElementById('add_path_form').addEventListener('submit', async (event) => {
     new FormData(event.srcElement)
     fd = new FormData(event.srcElement)
     let new_path = fd.get('new_path')
@@ -29,3 +29,30 @@
     }
   });
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const accountsTab = document.getElementById("accounts-tab");
+  const pathsTab = document.getElementById("paths-tab");
+  const accountsContent = document.getElementById("accounts-content");
+  const pathsContent = document.getElementById("paths-content");
+
+  // Function to switch tabs
+  function switchTab(activeTab, inactiveTab, activeContent, inactiveContent) {
+    activeTab.style.background = "#f0f0f0";
+    inactiveTab.style.background = "#fff";
+    activeContent.style.display = "block";
+    inactiveContent.style.display = "none";
+  }
+
+  // Set default tab
+  switchTab(accountsTab, pathsTab, accountsContent, pathsContent);
+
+  // Event listeners for tab switching
+  accountsTab.addEventListener("click", () => {
+    switchTab(accountsTab, pathsTab, accountsContent, pathsContent);
+  });
+
+  pathsTab.addEventListener("click", () => {
+    switchTab(pathsTab, accountsTab, pathsContent, accountsContent);
+  });
+});

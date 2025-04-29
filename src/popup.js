@@ -4,28 +4,48 @@
   accounts ||= [];
   sign_in_paths ||= ['/sign_in', '/users/sign_in'];
 
-  accounts.sort().forEach((account) => {
-    let textNode = document.createTextNode(account);
+  accounts.sort((a, b) => {
+    return b.lastAccessed.localeCompare(a.lastAccessed);
+  }).forEach((account) => {
     let liNode = document.createElement('li');
-    liNode.appendChild(textNode);
+
+    // Email address
+    let emailTextNode = document.createTextNode(account.email);
+    liNode.appendChild(emailTextNode);
+
+    // Last used path as a nested list
+    if (account.lastUsedPath) {
+      let nestedUl = document.createElement('ul');
+      nestedUl.style.listStyleType = 'none';
+      nestedUl.style.paddingLeft = '0';
+
+      let pathLi = document.createElement('li');
+      pathLi.textContent = account.lastUsedPath;
+      pathLi.style.color = '#666'; // Set text color to gray
+      pathLi.style.fontSize = '0.8em'; // Set font size to smaller
+      nestedUl.appendChild(pathLi);
+
+      liNode.appendChild(nestedUl);
+    }
+
     document.getElementById('account_list').appendChild(liNode);
   });
 
-  sign_in_paths.sort().forEach((account) => {
-    let textNode = document.createTextNode(account);
+  sign_in_paths.sort().forEach((path) => {
+    let textNode = document.createTextNode(path);
     let liNode = document.createElement('li');
     liNode.appendChild(textNode);
     document.getElementById('path_list').appendChild(liNode);
   });
 
   document.getElementById('add_path_form').addEventListener('submit', async (event) => {
-    new FormData(event.srcElement)
-    fd = new FormData(event.srcElement)
-    let new_path = fd.get('new_path')
+    event.preventDefault();
+    let fd = new FormData(event.target);
+    let new_path = fd.get('new_path');
 
-    if ( !sign_in_paths.includes(new_path) ) {
+    if (!sign_in_paths.includes(new_path)) {
       sign_in_paths.push(new_path);
-      browser.storage.local.set({sign_in_paths});
+      await browser.storage.local.set({ sign_in_paths });
     }
   });
 })();

@@ -12,16 +12,6 @@ async function setupContainer (request) {
     context = contexts[0];
   } else {
     context = await browser.contextualIdentities.create({name: name, ...CONTAINER_DETAILS});
-
-    browser.storage.local.get('accounts').then((results) => {
-      let { accounts } = results;
-      accounts ||= [];
-
-      if ( !accounts.includes(request.email) ) {
-        accounts.push(request.email)
-        browser.storage.local.set({accounts});
-      }
-    })
   }
 
   const [activeTab] = await browser.tabs.query({active: true, lastFocusedWindow: true});
@@ -44,6 +34,28 @@ async function setupContainer (request) {
 
     await browser.tabs.sendMessage(newTab.id, {action: 'login', ...request});
   }
+
+  // Update account information in storage
+  const accountsData = await browser.storage.local.get('accounts');
+  let accounts = accountsData.accounts || [];
+
+  const accountIndex = accounts.findIndex(account => account.email === request.email);
+  const timestamp = new Date().toISOString();
+
+  if (accountIndex !== -1) {
+    // Update existing account
+    accounts[accountIndex].lastUsedPath = activeTab.url;
+    accounts[accountIndex].lastAccessed = timestamp;
+  } else {
+    // Add new account
+    accounts.push({
+      email: request.email,
+      lastUsedPath: activeTab.url,
+      lastAccessed: timestamp
+    });
+  }
+
+  await browser.storage.local.set({accounts});
 }
 
 (async function init () {

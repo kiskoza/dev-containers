@@ -13,17 +13,25 @@
     let emailTextNode = document.createTextNode(account.email);
     liNode.appendChild(emailTextNode);
 
-    // Last used path as a nested list
-    if (account.lastUsedPath) {
+    // Used paths as clickable links in a nested list
+    if (account.usedPaths && account.usedPaths.length > 0) {
       let nestedUl = document.createElement('ul');
       nestedUl.style.listStyleType = 'none';
       nestedUl.style.paddingLeft = '0';
 
-      let pathLi = document.createElement('li');
-      pathLi.textContent = account.lastUsedPath;
-      pathLi.style.color = '#666'; // Set text color to gray
-      pathLi.style.fontSize = '0.8em'; // Set font size to smaller
-      nestedUl.appendChild(pathLi);
+      account.usedPaths.forEach((path) => {
+        let pathLi = document.createElement('li');
+
+        let pathLink = document.createElement('a');
+        pathLink.href = path.startsWith('/') ? `${window.location.origin}${path}` : path;
+        pathLink.textContent = path;
+        pathLink.style.color = 'gray';
+        pathLink.style.fontSize = '0.8em';
+        pathLink.style.textDecoration = 'none';
+
+        pathLi.appendChild(pathLink);
+        nestedUl.appendChild(pathLi);
+      });
 
       liNode.appendChild(nestedUl);
     }

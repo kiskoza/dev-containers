@@ -40,17 +40,29 @@ async function setupContainer (request) {
   let accounts = accountsData.accounts || [];
 
   const accountIndex = accounts.findIndex(account => account.email === request.email);
+  const currentPath = activeTab.url;
   const timestamp = new Date().toISOString();
 
   if (accountIndex !== -1) {
     // Update existing account
-    accounts[accountIndex].lastUsedPath = activeTab.url;
-    accounts[accountIndex].lastAccessed = timestamp;
+    let account = accounts[accountIndex];
+    account.usedPaths = account.usedPaths || [];
+
+    // Remove existing instance of the current path if it exists
+    account.usedPaths = account.usedPaths.filter(path => path !== currentPath);
+
+    // Add the current path to the beginning of the array
+    account.usedPaths.unshift(currentPath);
+
+    // Update lastAccessed timestamp
+    account.lastAccessed = timestamp;
+
+    accounts[accountIndex] = account;
   } else {
     // Add new account
     accounts.push({
       email: request.email,
-      lastUsedPath: activeTab.url,
+      usedPaths: [currentPath],
       lastAccessed: timestamp
     });
   }

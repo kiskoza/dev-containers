@@ -1,0 +1,20 @@
+li {
+  list-style-type: none;
+}
+
+.used-paths {
+  padding-left: 1em;
+}
+
+.remove-account {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.path-link {
+  color: gray;
+  font-size: 0.8em;
+  text-decoration: none;
+}

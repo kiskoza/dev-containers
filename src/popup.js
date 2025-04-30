@@ -8,6 +8,7 @@
     return b.lastAccessed.localeCompare(a.lastAccessed);
   }).forEach((account) => {
     let liNode = document.createElement('li');
+    liNode.style.listStyleType = 'none'; // Remove default bullet points
 
     // Email address
     let emailTextNode = document.createTextNode(account.email);
@@ -17,7 +18,7 @@
     if (account.usedPaths && account.usedPaths.length > 0) {
       let nestedUl = document.createElement('ul');
       nestedUl.style.listStyleType = 'none';
-      nestedUl.style.paddingLeft = '0';
+      nestedUl.style.paddingLeft = '1em'; // Indent nested list
 
       account.usedPaths.forEach((path) => {
         let pathLi = document.createElement('li');
